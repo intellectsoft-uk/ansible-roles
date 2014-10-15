@@ -1,0 +1,20 @@
+---
+dependencies:
+  - role: isoft.dotdeb
+    when: ansible_distribution == 'Debian'
+
+galaxy_info:
+  author: isoft
+  description: php-fpm and php-cli for Debian/Ubuntu
+  company: "Intellectsoft, LLC"
+  license: "license (BSD, MIT)"
+  min_ansible_version: 1.4
+  platforms:
+    - name: Ubuntu
+      versions:
+      - all
+    - name: Debian
+      versions:
+      - all
+  categories:
+    - database

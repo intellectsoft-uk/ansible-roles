@@ -1,0 +1,3 @@
+php_pear_packages:
+  - php-pear
+  - php5-dev

@@ -1,0 +1,27 @@
+---
+- name: Install php5-fpm
+  sudo: yes
+  apt: pkg=php5-fpm state=latest
+
+- name: Ensuredisable_default_pool php-fpm is started and enabled at boot (if configured).
+  service:
+    name: php5-fpm
+    state: started
+    enabled: yes
+
+- name: Check is default pool already disabled
+  stat: path=/etc/php5/fpm/pool.d/www.disabled
+  register: php_fpm_default_pool_disabled
+
+- name: Disable default pool
+  command: mv /etc/php5/fpm/pool.d/www.conf /etc/php5/fpm/pool.d/www.disabled creates=/etc/php5/fpm/pool.d/www.disabled
+  when: not php_fpm_default_pool_disabled.stat.exists and php.disable_default_pool
+  notify: restart php-fpm
+
+- name: Add php-fpm pools
+  template: >
+    src=php-fpm-pool.conf.j2
+    dest="/etc/php5/fpm/pool.d/{{item.name}}.conf"
+    owner=root group=root mode=0644
+  with_items: php_fpm_pools
+  notify: restart php-fpm

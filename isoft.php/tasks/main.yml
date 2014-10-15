@@ -1,0 +1,10 @@
+---
+- include: php-cli.yml
+- include: php-fpm.yml
+
+- name: Install php5 extensions
+  apt: pkg={{ item }} state=installed
+  with_items: php_extensions
+  notify: restart php-fpm
+
+- include: pecl.yml

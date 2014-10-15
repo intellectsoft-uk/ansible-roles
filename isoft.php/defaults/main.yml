@@ -1,0 +1,11 @@
+php:
+  timezone: UTC
+  error_reporting_level: E_ERROR
+  display_errors: 0
+  disable_default_pool: True
+
+php_pecl_extensions: []
+php_extensions:
+  - php5-intl
+  - php5-apcu
+php_fpm_pools: []
