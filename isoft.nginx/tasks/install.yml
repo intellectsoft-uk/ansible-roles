@@ -23,3 +23,8 @@
   apt: name={{ item }} state=present
   with_items: nginx_ubuntu_pkg
   when: ansible_os_family == "Debian"
+
+- name: Disable default hosts and removing examples
+  file: "path=/etc/nginx/conf.d/{{item}} state=absent"
+  with_items: ['default.conf', 'example_ssl.conf']
+  when: nginx_installed.stat.exists == false

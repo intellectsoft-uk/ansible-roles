@@ -1,8 +1,8 @@
 server {
-    listen {{ nginx.listen_port }};
+    listen {{ nginx_listen_port }};
+    {% if nginx_server_host %}server_name {{nginx_server_host}};{% endif %}
 
-    server_name {{nginx.server_name}};
-    root {{nginx.root_dir}};
+    root {{nginx_root_dir}};
     client_max_body_size {{ nginx_client_max_body_sze }};
 
     rewrite ^/app\.php/?(.*)$ /$1 permanent;
@@ -12,25 +12,21 @@ server {
         try_files $uri /app.php$is_args$args;
     }
 
-    {% if nginx.websockets_upstream %}
-    location {{nginx.websockets_location}} {
-        proxy_pass {{nginx.websockets_upstream}};
+    {% if nginx_websockets_upstream %}location {{nginx_websockets_location}} {
+        proxy_pass {{nginx_websockets_upstream}};
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
-    }
-    {% endif %}
+    }{% endif %}
 
-    {% if nginx.php_upstream %}
-    location ~ ^/(app|app_dev|config)\.php(/|$) {
-        fastcgi_pass {{nginx.php_upstream}};
+    {% if nginx_php_upstream %}location ~ ^/(app|app_dev|config)\.php(/|$) {
+        fastcgi_pass {{nginx_php_upstream}};
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         fastcgi_param HTTPS off;
-    }
-    {% endif %}
+    }{% endif %}
 
-    error_log {{nginx.error_log}};
-    access_log {{nginx.access_log}};
+    error_log {{nginx_error_log}};
+    access_log {{nginx_access_log}};
 }
