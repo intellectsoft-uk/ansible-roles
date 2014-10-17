@@ -13,7 +13,7 @@ server {
     }
 
     {% if nginx.websockets_upstream %}
-    location /{{nginx.websockets_location}} {
+    location {{nginx.websockets_location}} {
         proxy_pass {{nginx.websockets_upstream}};
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;

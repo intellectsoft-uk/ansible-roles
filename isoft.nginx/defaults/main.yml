@@ -10,3 +10,4 @@ nginx:
 
   php_upstream: "unix:/var/run/php5-fpm-{{nginx_server_name}}.sock"
   websockets_upstream: ~
+  websockets_location: /
