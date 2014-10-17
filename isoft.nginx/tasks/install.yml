@@ -1,0 +1,25 @@
+---
+- name: Add nginx official repository for latest stable packages
+  apt_repository: repo='deb http://nginx.org/packages/debian/ wheezy nginx' state=present
+
+- name: Add nginx official repository for latest stable source packages
+  apt_repository: repo='deb-src http://nginx.org/packages/debian/ wheezy nginx' state=present
+
+- name: download gpg key for official nginx repository
+  action: get_url url=http://nginx.org/keys/nginx_signing.key dest=/tmp/nginx.key mode=0400
+
+- name: add gpg key for official nginx repository
+  action: command apt-key add /tmp/nginx.key
+
+- name: Check if Nginx is already installed.
+  stat: path=/etc/init.d/nginx
+  register: nginx_installed
+
+- name: Update apt cache if Nginx is not yet installed.
+  apt: update_cache=yes
+  when: nginx_installed.stat.exists == false
+
+- name: Install the nginx packages
+  apt: name={{ item }} state=present
+  with_items: nginx_ubuntu_pkg
+  when: ansible_os_family == "Debian"

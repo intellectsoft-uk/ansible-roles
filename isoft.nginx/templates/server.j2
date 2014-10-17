@@ -1,0 +1,36 @@
+server {
+    listen {{ nginx.listen_port }};
+
+    server_name {{nginx.server_name}};
+    root {{nginx.root_dir}};
+    client_max_body_size {{ nginx_client_max_body_sze }};
+
+    rewrite ^/app\.php/?(.*)$ /$1 permanent;
+
+    location / {
+        # try to serve file directly, fallback to app.php
+        try_files $uri /app.php$is_args$args;
+    }
+
+    {% if nginx.websockets_upstream %}
+    location /{{nginx.websockets_location}} {
+        proxy_pass {{nginx.websockets_upstream}};
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+    {% endif %}
+
+    {% if nginx.php_upstream %}
+    location ~ ^/(app|app_dev|config)\.php(/|$) {
+        fastcgi_pass {{nginx.php_upstream}};
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param HTTPS off;
+    }
+    {% endif %}
+
+    error_log {{nginx.error_log}};
+    access_log {{nginx.access_log}};
+}

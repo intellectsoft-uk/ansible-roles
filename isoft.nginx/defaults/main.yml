@@ -1,0 +1,12 @@
+---
+nginx:
+  client_max_body_sze: 12M
+  server_name: www
+  server_host: localhost
+  root_dir: /var/www/
+  log_dir: "/var/log/nginx"
+  error_log: "{{log_dir}}/{{nginx_server_name}}_error.log"
+  access_log: "{{log_dir}}/{{nginx_server_name}}_access.log"
+
+  php_upstream: "unix:/var/run/php5-fpm-{{nginx_server_name}}.sock"
+  websockets_upstream: ~
