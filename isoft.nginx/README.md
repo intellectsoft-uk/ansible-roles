@@ -4,6 +4,7 @@ Intellectsoft Nginx Ansible role
 Base nginx role for symfony-based projects
 
 ##Example playbook
+
 ```
 ---
  - hosts: all
@@ -17,6 +18,7 @@ Base nginx role for symfony-based projects
 
 ### WebSockets
 If you are using nginx for proxy websockets, then you may just set this variables:
+
 ```
 nginx:
   websockets_location /wsapp
