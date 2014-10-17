@@ -1,8 +1,8 @@
-php:
-  timezone: UTC
-  error_reporting_level: E_ERROR
-  display_errors: 0
-  disable_default_pool: True
+
+php_timezone: UTC
+php_error_reporting_level: E_ERROR
+php_display_errors: 0
+php_disable_default_pool: True
 
 php_pecl_extensions: []
 php_extensions:
