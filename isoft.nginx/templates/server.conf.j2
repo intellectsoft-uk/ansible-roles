@@ -5,8 +5,6 @@ server {
     root {{nginx_root_dir}};
     client_max_body_size {{ nginx_client_max_body_sze }};
 
-    rewrite ^/app\.php/?(.*)$ /$1 permanent;
-
     location / {
         # try to serve file directly, fallback to app.php
         try_files $uri /app.php$is_args$args;
