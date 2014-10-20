@@ -25,3 +25,10 @@
     owner=root group=root mode=0644
   with_items: php_fpm_pools
   notify: restart php-fpm
+
+- name: Configure php.ini for php-fpm
+  template: >
+      src=php.ini.j2
+      dest="{{php_ini_files.fpm}}"
+      owner=root group=root mode=0644
+  notify: restart php-fpm

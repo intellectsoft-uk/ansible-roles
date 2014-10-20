@@ -2,3 +2,10 @@
 - name: Install php5-cli
   sudo: yes
   apt: pkg=php5-cli state=latest
+
+- name: Configure php.ini for php-cli
+  template: >
+      src=php.ini.j2
+      dest="{{php_ini_files.cli}}"
+      owner=root group=root mode=0644
+  notify: restart php-fpm
