@@ -1,0 +1,9 @@
+---
+
+common_mandatory_apt_packages:
+  - vim
+  - curl
+  - mc
+  - aptitude
+  - python-pycurl
+  - python-software-properties

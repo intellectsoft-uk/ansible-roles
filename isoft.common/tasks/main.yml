@@ -1,0 +1,15 @@
+---
+- name: Add system users
+  user: name={{ item.user }} comment={{ item.comment | default("Project User") }} home={{ item.home }} shell=/bin/bash
+  ignore_errors: True
+  with_items: system_users
+
+- name: Update APT package cache
+  apt: update_cache=yes
+
+- name: Install required server packages
+  apt: pkg={{ item }} state=present
+  with_flattened:
+    - common_mandatory_apt_packages
+    - common_apt_packages
+
