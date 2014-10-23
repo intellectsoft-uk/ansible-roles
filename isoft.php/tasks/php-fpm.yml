@@ -15,7 +15,7 @@
 
 - name: Disable default pool
   command: mv /etc/php5/fpm/pool.d/www.conf /etc/php5/fpm/pool.d/www.disabled creates=/etc/php5/fpm/pool.d/www.disabled
-  when: not php_fpm_default_pool_disabled.stat.exists and php.disable_default_pool
+  when: not php_fpm_default_pool_disabled.stat.exists and php_disable_default_pool
   notify: restart php-fpm
 
 - name: Add php-fpm pools

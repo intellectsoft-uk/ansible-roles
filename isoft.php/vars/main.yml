@@ -2,6 +2,13 @@ php_pear_packages:
   - php-pear
   - php5-dev
 
+php_mandatory_extensions:
+  - php5-intl
+  - php5-sqlite
+  - php5-mcrypt
+  - php5-gd
+  - php5-curl
+
 php_ini_files:
   cli: /etc/php5/cli/conf.d/php.ini
   fpm: /etc/php5/fpm/conf.d/php.ini

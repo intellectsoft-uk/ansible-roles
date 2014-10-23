@@ -4,7 +4,9 @@
 
 - name: Install php5 extensions
   apt: pkg={{ item }} state=installed
-  with_items: php_extensions
+  with_flattened:
+    - php_mandatory_extensions
+    - php_extensions
   notify: restart php-fpm
 
 - include: pecl.yml

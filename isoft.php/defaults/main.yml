@@ -6,7 +6,5 @@ php_disable_default_pool: True
 php_short_open_tag: On
 
 php_pecl_extensions: []
-php_extensions:
-  - php5-intl
-  - php5-apcu
+php_extensions: []
 php_fpm_pools: []
