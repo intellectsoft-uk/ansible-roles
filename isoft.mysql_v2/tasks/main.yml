@@ -1,0 +1,15 @@
+- name: install mysql
+  apt: pkg=mysql-server state=present
+
+- name: install python mysql
+  apt: pkg=python-mysqldb state=latest
+
+- name: Ensure MySQL databases are present.
+  mysql_db: >
+    name="{{ item.name }}"
+    collation="utf8_general_ci"
+    encoding="utf8"
+    login_user={{ mysql_username }}
+    login_password= {{ mysql_password}}
+    state=present
+  with_items: mysql_databases

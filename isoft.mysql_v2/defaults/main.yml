@@ -1,0 +1,5 @@
+---
+# databases and users settings
+mysql_databases: []
+mysql_username: root
+mysql_password: ''

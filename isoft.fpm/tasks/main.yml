@@ -1,0 +1,6 @@
+---
+- name: install required packages for fpm
+  apt: pkg=ruby-dev state=present
+
+- name: install fpm
+  gem: name=fpm version=1.1.0 state=present user_install=no
