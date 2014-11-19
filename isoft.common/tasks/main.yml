@@ -4,6 +4,8 @@
   ignore_errors: True
   with_items: system_users
 
+- include: apt-repositories.yml
+
 - name: Update APT package cache
   apt: update_cache=yes
 
