@@ -10,3 +10,4 @@ nginx_access_log: "{{nginx_log_dir}}/{{nginx_server_name}}_access.log"
 nginx_php_upstream: "unix:/var/run/php5-fpm-{{nginx_server_name}}.sock"
 nginx_websockets_upstream: ~
 nginx_websockets_location: /
+nginx_template_path: server.conf.j2
