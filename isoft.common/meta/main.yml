@@ -3,14 +3,11 @@ dependencies: []
 
 galaxy_info:
   author: isoft
-  description: Common role for Debian/Ubuntu initial configuration
+  description: Common role for Debian initial configuration
   company: "Intellectsoft, LLC"
   license: "license (BSD, MIT)"
   min_ansible_version: 1.4
   platforms:
-    - name: Ubuntu
-      versions:
-      - all
     - name: Debian
       versions:
       - all

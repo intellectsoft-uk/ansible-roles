@@ -1,41 +1,37 @@
 Common Role for ansible
 ===========================
 
-Do initial configuration, installs main environment dependencies, creates system users
+Role setup locale as `en_US` and `UTC` timezone. Change `common_locale_lang` and `common_timezone` variables if you prefer another values
 
-List of required packages:
-```
-- vim
-- curl
-- mc
-- aptitude
-- python-pycurl
-- python-software-properties
-```
+Role will install packages by default:
 
-You can use `apt_repositories` and `apt_keys`.
-You can add your own packages via `common_apt_packages` var. Both lists will be merged and installed.
-
-## TODO
-- set locale
+    - vim
+    - curl
+    - mc
+    - aptitude
+    - python-curl
+    - python-software-properties
+    
+In `additional_apt_packages` variable define list of any packages you wish to install
 
 ## Example Playbook
 
 ```
----
- - hosts: all
-   vars:
-    apt_keys:
-      - http://www.dotdeb.org/dotdeb.gpg
-    apt_repositories:
-      - deb http://packages.dotdeb.org wheezy all
-    common_apt_packages:
-      - htop
-    system_users:
-      - user: my_project
-        comment: My Project User
-        home: "/home/my_project"
-   roles:
-    - isoft.common
+
+    ---
+     - hosts: all
+       vars:
+        apt_keys:
+          - http://www.dotdeb.org/dotdeb.gpg
+        apt_repositories:
+          - deb http://packages.dotdeb.org wheezy all
+        additional_apt_packages:
+          - htop
+        system_users:
+          - user: my_project
+            comment: My Project User
+            home: "/home/my_project"
+       roles:
+        - isoft.common
 
 ```

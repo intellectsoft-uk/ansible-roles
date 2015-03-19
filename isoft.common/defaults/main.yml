@@ -1,5 +1,12 @@
 ---
-apt_keys: []
-apt_repositories: []
-common_apt_packages: []
+common_timezone: UTC
+
+common_locale_all: en_US.UTF-8
+common_locale_lang: en_US.UTF-8
+
+apt_keys: ["http://www.dotdeb.org/dotdeb.gpg"]
+apt_repositories: ["deb http://packages.dotdeb.org wheezy all"]
+
 system_users: []
+
+additional_apt_packages: []

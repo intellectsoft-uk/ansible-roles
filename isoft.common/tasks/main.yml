@@ -1,17 +1,29 @@
 ---
+- name: Set locale
+  template: src=locale
+            dest=/etc/default/locale
+
+- name: Set timezone
+  file: src=/usr/share/zoneinfo/{{ common_timezone }}
+        dest=/etc/localtime
+        force=yes
+        state=link
+
 - name: Add system users
   user: name={{ item.user }} comment={{ item.comment | default("Project User") }} home={{ item.home }} shell=/bin/bash
-  ignore_errors: True
   with_items: system_users
 
-- include: apt-repositories.yml
+- name: Add apt key
+  apt_key: url="{{item}}" state=present
+  with_items: apt_keys
 
-- name: Update APT package cache
-  apt: update_cache=yes
+- name: Add apt repositories
+  apt_repository: repo="{{item}}" state=present
+  with_items: apt_repositories
 
 - name: Install required server packages
-  apt: pkg={{ item }} state=present
+  apt: pkg={{ item }} state=present update_cache=yes
   with_flattened:
-    - common_mandatory_apt_packages
-    - common_apt_packages
+    - default_apt_packages
+    - additional_apt_packages
 
