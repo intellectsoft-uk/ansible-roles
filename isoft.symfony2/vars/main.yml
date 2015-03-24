@@ -1,0 +1,3 @@
+---
+symfony2_env: prod
+cache_clear_options: --no-warmup

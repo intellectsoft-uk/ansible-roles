@@ -1,0 +1,5 @@
+---
+php_path: php
+composer:
+  no_dev: no
+  optimize_autoloader: yes

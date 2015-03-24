@@ -1,0 +1,7 @@
+---
+- name: Symfony2 | Run composer install
+  sudo: Yes
+  sudo_user: "{{ web_server_user_name }}"
+  composer: command=install working_dir={{ web_server_user_home }} no_dev={{ composer.no_dev }} optimize_autoloader={{ composer.optimize_autoloader }}
+
+- include: roles/isoft.symfony2/tasks/console.yml

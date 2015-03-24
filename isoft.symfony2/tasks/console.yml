@@ -1,0 +1,22 @@
+---
+- name: Symfony2 | Copy parameters.yml
+  sudo: Yes
+  sudo_user: "{{ web_server_user_name }}"
+  template: src=parameters.yml.j2 dest={{ web_server_dir }}/app/config/parameters.yml
+
+- name: Symfony2 | Cache clearing
+  sudo: true
+  sudo_user: "{{ web_server_user_name }}"
+  shell: "cd {{ web_server_user_home }} && {{ php_path }} app/console cache:clear -env={{ symfony2_env }} {{ cache_clear_options }}"
+  args:
+      chdir: "{{ web_server_user_home }}"
+
+- name: Symfony2 | Dump assets
+  sudo: true
+  sudo_user: "{{ web_server_user_name }}"
+  shell: "cd {{ web_server_user_home }} && {{ php_path }} app/console assetic:dump --env={{ symfony2_env }}"
+
+- name: Symfony2 | Run migrations
+  sudo: true
+  sudo_user: "{{ web_server_user_name }}"
+  shell: "cd {{ web_server_user_home }} && if $(grep doctrine-migrations-bundle composer.json); then {{ php_path }} app/console doctrine:migrations:migrate -n; fi"
