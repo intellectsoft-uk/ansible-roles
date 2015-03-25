@@ -1,0 +1,15 @@
+---
+setup_path_dist: "~" # root directory of project. Used for all executable commands and deb extract
+
+
+setup_deb: no # if 'yes' deb package will be installed. 'setup_deb_path_src' required for it
+setup_deb_path_src: ''
+
+
+setup_configs: no # if 'yes' config files will be delivered
+setup_configs_templates:
+  - {src: '', dist: ''}
+
+setup_after_install: no # if 'yes' after install will be executed following commands
+setup_after_install_commands:
+  - ''

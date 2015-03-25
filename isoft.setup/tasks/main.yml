@@ -1,0 +1,33 @@
+---
+
+- name: Copy deb package
+  sudo: true
+  copy: src={{setup_deb_path_src}} dest=/tmp/{{app_name}}.deb owner=root
+  when: "setup_deb"
+
+- name: Install/update package
+  sudo: true
+  command: /usr/bin/dpkg -i /tmp/{{app_name}}.deb
+  when: "setup_deb"
+
+
+- name: Set chown for package
+  sudo: true
+  when: "setup_deb"
+  file: path={{ setup_path_dist }} owner={{ setup_sudo_user }} group={{ setup_sudo_user }} state=directory recurse=yes
+
+- name: Setup configs
+  sudo: true
+  sudo_user: "{{setup_sudo_user}}"
+  template: src={{item.src}} dest={{item.dist}} #force=no
+  when: "setup_configs"
+  with_items: "setup_configs_templates"
+
+- name: Execute after extract commands
+  sudo: true
+  sudo_user: "{{ web_server_user_name }}"
+  command: "{{item}}"
+  when: "setup_after_install"
+  with_items: "setup_after_install_commands"
+  args:
+      chdir: "{{ setup_path_dist }}"
