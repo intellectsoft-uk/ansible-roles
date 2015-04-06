@@ -1,10 +1,28 @@
 ---
 - name: Add system users
-  user: name={{ item.user }} comment={{ item.comment | default("Project User") }} home={{ item.home }} shell=/bin/bash
-  ignore_errors: True
+  user:
+    name: "{{ item.user }}"
+    comment: "{{ item.comment }}"
+    home: "{{ item.home }}"
+    shell: /bin/bash
   with_items: system_users
 
 - include: apt-repositories.yml
+
+- name: Set default locale
+  lineinfile: dest=/etc/default/locale
+              regexp="{{item.key}}"
+              line="{{item.key}}=\"{{item.value}}\""
+  with_dict:
+      LC_ALL: "{{common_locale_all}}"
+      LC_LANG: "{{common_locale_lang}}"
+
+- name: Set timezone
+  file: src=/usr/share/zoneinfo/{{ common_timezone }}
+        dest=/etc/localtime
+        force=yes
+        state=link
+
 
 - name: Update APT package cache
   apt: update_cache=yes
