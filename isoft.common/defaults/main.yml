@@ -3,3 +3,6 @@ apt_keys: []
 apt_repositories: []
 common_apt_packages: []
 system_users: []
+common_timezone: UTC
+common_locale_all: en_US.UTF-8
+common_locale_lang: en_US.UTF-8
