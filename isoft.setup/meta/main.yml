@@ -3,7 +3,7 @@ dependencies: []
 
 galaxy_info:
   author: isoft
-  description: Common role for Debian initial configuration
+  description: setup configs and run postinstall commands. Possible deploy code via deb package
   company: "Intellectsoft, LLC"
   license: "license (BSD, MIT)"
   min_ansible_version: 1.4
@@ -11,4 +11,5 @@ galaxy_info:
     - name: Debian
       versions:
       - all
-  categories: []
+  categories:
+    - deploy

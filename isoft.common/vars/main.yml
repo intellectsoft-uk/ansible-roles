@@ -1,6 +1,5 @@
 ---
-
-common_mandatory_apt_packages:
+default_apt_packages:
   - vim
   - curl
   - mc
