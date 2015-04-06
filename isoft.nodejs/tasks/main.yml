@@ -2,10 +2,16 @@
 
 - name: Add node.js repository
   apt_repository: repo='deb http://ppa.launchpad.net/chris-lea/node.js/ubuntu lucid main' state=present update-cache=yes
-  when: ansible_distribution == 'Debian'
 
 - name: Install nodejs and npm
-  apt: pkg=nodejs state=latest force=yes
+  apt: pkg=nodejs state=present
+
+- name: Check is required npm packages already installed
+  shell: npm ls -g --depth 0
+  register: npm_packages_check
 
 - name: Install npm packages global
-  shell: npm install -g {{npm_global_packages | join(" ")}}
+  shell: npm install -g {{ item }}
+  when: npm_packages_check.stdout.find(item) == -1
+  with_items: npm_global_packages
+
