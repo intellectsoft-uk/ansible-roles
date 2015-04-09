@@ -25,6 +25,9 @@ nginx_websockets_upstream: http://localhost:8743
 
 See template for details
 
+### Templates
+You may want to change default templates for nginx.conf and your vhosts. To do so you can change `nginx_config_template` and `nginx_template_path` variables to specify your templates.
+
 ## TODO:
  - ssl version
  - nginx.conf configuration
