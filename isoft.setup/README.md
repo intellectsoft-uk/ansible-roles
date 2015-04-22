@@ -8,7 +8,8 @@ Install deb package and configs and execute some commands after it
 ---
 - hosts: all
   vars:
-    npm_global_packages: [gulp, bower]
+    setup_deb: yes
+    setup_deb_path_src: builds/build.deb
   roles:
     - isoft.setup
 

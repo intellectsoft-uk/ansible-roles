@@ -25,7 +25,7 @@
 
 - name: Execute after extract commands
   sudo: true
-  sudo_user: "{{ web_server_user_name }}"
+  sudo_user: "{{ setup_sudo_user }}"
   command: "{{item}}"
   when: "setup_after_install"
   with_items: "setup_after_install_commands"
