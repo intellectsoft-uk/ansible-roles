@@ -6,7 +6,7 @@
   tags: [packages,php]
 
 - name: Install PECL extensions
-  shell: echo "\n\n\n\n\n\n\n\n\n\n" | pecl install {{ item }}
+  shell: echo "\n\n\n\n\n\n\n\n\n\n" | pecl install {{ item.name }}
   register: pecl_result
   changed_when: "'already installed' not in pecl_result.stdout"
   failed_when: "pecl_result.stderr or ('ERROR' in pecl_result.stdout)"
@@ -14,7 +14,7 @@
   tags: [packages,php]
 
 - name: Create PECL extensions .ini files
-  template: src=extension.ini.j2 dest=/etc/php5/mods-available/{{ item }}.ini owner=root group=root mode=0644
+  template: src={{ item.ini | default("extension.ini.j2") }} dest=/etc/php5/mods-available/{{ item.name }}.ini owner=root group=root mode=0644
   with_items: php_pecl_extensions
   when: ansible_os_family == "Debian"
   tags: [packages,php]
