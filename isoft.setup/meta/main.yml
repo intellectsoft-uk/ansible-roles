@@ -1,0 +1,15 @@
+---
+dependencies: []
+
+galaxy_info:
+  author: isoft
+  description: setup configs and run postinstall commands. Possible deploy code via deb package
+  company: "Intellectsoft, LLC"
+  license: "license (BSD, MIT)"
+  min_ansible_version: 1.4
+  platforms:
+    - name: Debian
+      versions:
+      - all
+  categories:
+    - deploy
