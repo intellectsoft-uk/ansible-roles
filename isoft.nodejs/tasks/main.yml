@@ -4,7 +4,7 @@
   apt_repository: repo='deb http://ppa.launchpad.net/chris-lea/node.js/ubuntu lucid main' state=present update-cache=yes
 
 - name: Install nodejs and npm
-  apt: pkg=nodejs state=present
+  apt: pkg=nodejs state=present force=yes
 
 - name: Check is required npm packages already installed
   shell: npm ls -g --depth 0
