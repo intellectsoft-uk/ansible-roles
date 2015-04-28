@@ -1,4 +1,6 @@
 ; {{ ansible_managed }}
-; configuration for php PECL {{ item }} extension
+; configuration for php PECL {{ item.name }} extension
 ; priority=20
-extension={{ item }}.so
+zend_extension={{ item.name }}.so
+
+{% block extension_settings %}{% endblock %}
