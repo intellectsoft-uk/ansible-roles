@@ -20,7 +20,7 @@
   tags: [packages,php]
 
 - name: Enable PECL extensions
-  shell: php5enmod  {{ item }}
+  shell: php5enmod  {{ item.name }}
   with_items: php_pecl_extensions
   when: ansible_os_family == "Debian"
   tags: [packages,php]
