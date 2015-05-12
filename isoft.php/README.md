@@ -41,9 +41,6 @@ xdebug.remote_autostart=1
 
 Please note that `ini` property is optional.
 
-## Dependency
-On Debian depends from `isoft.dotdeb`
-
 ## Variables
 see `defaults/main.yml`
 
