@@ -1,7 +1,0 @@
-deb http://packages.dotdeb.org wheezy all
-deb-src http://packages.dotdeb.org wheezy all
-
-{% if dotdeb.php_version in  [55, 56] %}
-deb http://packages.dotdeb.org wheezy-php{{dotdeb.php_version}} all
-deb-src http://packages.dotdeb.org wheezy-php{{dotdeb.php_version}} all
-{% endif %}

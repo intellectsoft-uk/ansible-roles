@@ -1,7 +1,5 @@
 ---
-dependencies:
-  - role: isoft.dotdeb
-    when: ansible_distribution == 'Debian'
+dependencies: []
 
 galaxy_info:
   author: isoft
