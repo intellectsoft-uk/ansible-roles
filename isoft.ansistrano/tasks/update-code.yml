@@ -1,0 +1,53 @@
+---
+# Update code deployment step
+- name: ANSISTRANO | Get release timestamp
+  command: date +%Y%m%d%H%M%S
+  register: ansistrano_timestamp
+  sudo: yes
+  sudo_user: "{{ansistrano_deploy_user}}"
+
+- name: ANSISTRANO | Get release path
+  command: echo "{{ ansistrano_deploy_to }}/{{ ansistrano_version_dir }}/{{ ansistrano_timestamp.stdout }}"
+  register: ansistrano_release_path
+  sudo: yes
+  sudo_user: "{{ansistrano_deploy_user}}"
+
+- name: ANSISTRANO | Get releases path
+  command: echo "{{ ansistrano_deploy_to }}/{{ ansistrano_version_dir }}"
+  register: ansistrano_releases_path
+  sudo: yes
+  sudo_user: "{{ansistrano_deploy_user}}"
+
+- name: ANSISTRANO | RSYNC | Deploy using Rsync strategy
+  include: update-code/rsync.yml
+  when: ansistrano_deploy_via == 'rsync'
+  sudo: yes
+  sudo_user: "{{ansistrano_deploy_user}}"
+
+- name: ANSISTRANO | SCP | Deploy using SCP strategy
+  include: update-code/copy.yml
+  when: ansistrano_deploy_via == 'copy'
+  sudo: yes
+  sudo_user: "{{ansistrano_deploy_user}}"
+
+- name: ANSISTRANO | GIT | Deploy using Git strategy
+  include: update-code/git.yml
+  when: ansistrano_deploy_via == 'git'
+  sudo: yes
+  sudo_user: "{{ansistrano_deploy_user}}"
+
+- name: ANSISTRANO | TarGz | Deploy using TarGz strategy
+  include: update-code/targz.yml
+  when: ansistrano_deploy_via == 'targz'
+  sudo: yes
+  sudo_user: "{{ansistrano_deploy_user}}"
+
+- name: ANSISTRANO | Copy release version into REVISION file
+  shell: echo {{ ansistrano_timestamp.stdout }} > {{ ansistrano_release_path.stdout }}/REVISION
+  sudo: yes
+  sudo_user: "{{ansistrano_deploy_user}}"
+
+- name: ANSISTRANO | Touches up the release code
+  file: path={{ ansistrano_release_path.stdout }} state=directory recurse=yes mode="g+w"
+  sudo: yes
+  sudo_user: "{{ansistrano_deploy_user}}"
