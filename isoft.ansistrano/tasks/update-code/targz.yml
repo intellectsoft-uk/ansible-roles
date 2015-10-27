@@ -1,0 +1,10 @@
+---
+- name: Creates release directory
+  file: path={{ ansistrano_release_path.stdout }} state=directory
+  sudo: yes
+  sudo_user: "{{ansistrano_deploy_user}}"
+
+- name: ANSISTRANO | TarGz | Deploy existing code to remote servers
+  unarchive: src={{ ansistrano_deploy_from }} dest={{ ansistrano_release_path.stdout }}
+  sudo: yes
+  sudo_user: "{{ansistrano_deploy_user}}"

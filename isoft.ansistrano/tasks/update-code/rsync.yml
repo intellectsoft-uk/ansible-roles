@@ -1,0 +1,16 @@
+---
+- name: ANSISTRANO | RSYNC | Get shared path (in rsync case)
+  command: echo "{{ ansistrano_deploy_to }}/shared/.shared-copy"
+  register: ansistrano_shared_path
+  sudo: yes
+  sudo_user: "{{ansistrano_deploy_user}}"
+
+- name: ANSISTRANO | RSYNC | Rsync application files to remote shared copy
+  synchronize: src={{ ansistrano_deploy_from }} dest={{ ansistrano_shared_path.stdout }} recursive=yes delete=yes archive=yes compress=yes rsync_opts={{ ansistrano_rsync_extra_params }}
+  sudo: yes
+  sudo_user: "{{ansistrano_deploy_user}}"
+
+- name: ANSISTRANO | RSYNC | Deploy existing code to servers
+  command: cp -pr {{ ansistrano_shared_path.stdout }} {{ ansistrano_release_path.stdout }}
+  sudo: yes
+  sudo_user: "{{ansistrano_deploy_user}}"

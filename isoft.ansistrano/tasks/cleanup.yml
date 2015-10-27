@@ -1,0 +1,7 @@
+---
+# Clean up releases
+- name: ANSISTRANO | Clean up releases
+  shell: ls -1dt {{ ansistrano_releases_path.stdout }}/* | tail -n +$(({{ ansistrano_keep_releases }} + 1)) | xargs rm -rf
+  when: ansistrano_keep_releases > 0
+  sudo: yes
+  sudo_user: "{{ansistrano_deploy_user}}"
